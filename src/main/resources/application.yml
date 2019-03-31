@@ -1,3 +1,8 @@
 micronaut:
-    application:
-        name: complete
+  application:
+    name: complete
+endpoints:
+  info:
+    enabled: true
+    sensitive: false
+
