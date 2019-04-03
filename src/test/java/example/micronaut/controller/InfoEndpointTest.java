@@ -28,7 +28,6 @@ public class InfoEndpointTest {
     @AfterClass
     public static void tearDown() {
         if (server != null) { server.stop(); }
-
         if (client != null) { client.stop(); }
     }
 

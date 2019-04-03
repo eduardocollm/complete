@@ -1,6 +1,11 @@
 micronaut:
   application:
     name: complete
+  security:
+    enabled: true
+    endpoints:
+      login:
+        enabled: true
 endpoints:
   info:
     enabled: true

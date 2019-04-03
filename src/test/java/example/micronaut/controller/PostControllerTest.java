@@ -1,17 +1,19 @@
 package example.micronaut.controller;
 
+import example.micronaut.domain.PostRequest;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
 
-public class HelloControllerTest {
+public class PostControllerTest {
 
     private static EmbeddedServer server;
     private static HttpClient client;
@@ -25,16 +27,18 @@ public class HelloControllerTest {
     @AfterClass
     public static void tearDown() {
         if (server != null) { server.stop(); }
-
         if (client != null) { client.stop(); }
     }
 
     @Test
-    public void testHello() {
-        HttpRequest request = HttpRequest.GET("/hello").basicAuth("sherlock", "password");
-        String body = client.toBlocking().retrieve(request);
-        assertNotNull(body);
-        assertEquals("Hello World!", body);
+    public void testPostIt() {
+        HttpRequest request = HttpRequest.POST("/numbers", "{ \"dos\": \"hola\" }").basicAuth("sherlock", "password");
+        try {
+            String result = client.toBlocking().retrieve(request);
+        } catch (HttpClientResponseException e) {
+            Assert.assertEquals("request.uno: uno cannot be null", e.getMessage());
+            return;
+        }
+        Assert.assertFalse(true);
     }
-
 }
